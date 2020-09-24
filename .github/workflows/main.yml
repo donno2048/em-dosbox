@@ -1,0 +1,20 @@
+name: build-em-dosbox
+on: [push]
+jobs:
+  job_id:
+    name: build 
+    runs-on: ubuntu-latest
+    steps:
+        - name: Install GNU Autotools
+          run: sudo apt-get install autotools-dev autoconf automake
+        - name: Install Emscripten [latest]
+          uses: mymindstorm/setup-emsdk@v6
+        - name: Checkout Repository
+          uses: actions/checkout@v2
+        - name: Using Configure Flags
+          run: echo "./configure --enable-wasm --disable-opengl --host=none-none-none"
+        - name: Configure and Build
+          run: |
+            ./autogen.sh
+            emconfigure ./configure --enable-wasm --disable-opengl --host=none-none-none
+            emmake make
