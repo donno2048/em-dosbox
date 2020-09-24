@@ -15,6 +15,7 @@ jobs:
           run: echo "./configure --enable-wasm --disable-opengl --host=none-none-none"
         - name: Configure and Build
           run: |
+            chmod +x autogen.sh
             ./autogen.sh
             emconfigure ./configure --enable-wasm --disable-opengl --host=none-none-none
             emmake make
