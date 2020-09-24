@@ -1,0 +1,4 @@
+demo/*.html filter=lfs diff=lfs merge=lfs -text
+demo/*.js filter=lfs diff=lfs merge=lfs -text
+demo/*.wasm filter=lfs diff=lfs merge=lfs -text
+demo/*.data filter=lfs diff=lfs merge=lfs -text
