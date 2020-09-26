@@ -53,6 +53,7 @@ Makefile
 
 # Test Modules
 /tests/node_modules
+/tests/obj
 
 # Miscellaneous files
 
