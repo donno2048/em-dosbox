@@ -60,7 +60,7 @@ First we have to build GNU compatible configure scripts, this requires Autotools
 
 We then need to run the configure script targetting web assembly
 
-```./configure --enable-wasm --disable-opengl```
+```emconfigure ./configure --enable-wasm --disable-opengl```
 
 We can then build the application
 
@@ -81,7 +81,7 @@ And run any compliant static HTTP Server, for example:
 
 With your browser, set url to http://localhost:8000/dosbox.html to be presented with a basic DOS shell:
 
-![DosBox](https://raw.githubusercontent.com/warpcoil/em-dosbox/master/dosbox.png)
+![DosBox](https://github.com/warpcoil/em-dosbox/raw/main/dosbox.png)
 
 Running DOS Programs
 --------------------
