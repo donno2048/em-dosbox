@@ -1,5 +1,9 @@
 name: build-em-dosbox
-on: [push]
+on:
+  push:
+    paths-ignore:
+      - 'dist/**'
+      - '**/README.md'
 jobs:
   job_id:
     name: build 
@@ -19,3 +23,12 @@ jobs:
             ./autogen.sh
             emconfigure ./configure --enable-wasm --disable-opengl --host=none-none-none
             emmake make
+            cp src/dosbox.html src/dosbox.js src/dosbox.wasm src/packager.py dist/
+        - name: Publish Artifacts to Dist/
+          uses: seanmiddleditch/gha-publish-to-git@v2
+          with:
+            branch: main
+            github_token: '${{ secrets.GITHUB_TOKEN  }}'
+            github_pat: '${{ secrets.GH_PAT }}'
+            source_folder: dist
+          if: success() && github.event == 'push'
