@@ -23,7 +23,7 @@ jobs:
             ./autogen.sh
             emconfigure ./configure --enable-wasm --disable-opengl --host=none-none-none
             emmake make
-            cp src/dosbox.html src/dosbox.js src/dosbox.wasm packager.py dist/
+            cp src/dosbox.html src/dosbox.js src/dosbox.wasm src/packager.py dist/
         - name: Publish Artifacts to Dist/
           uses: seanmiddleditch/gha-publish-to-git@v2
           with:
