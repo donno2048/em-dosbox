@@ -24,11 +24,13 @@ jobs:
             emconfigure ./configure --enable-wasm --disable-opengl --host=none-none-none
             emmake make
             cp src/dosbox.html src/dosbox.js src/dosbox.wasm src/packager.py dist/
+        - name: Commit re-Distributables
+          run: |
+            git config --local user.email "action@github.com"
+            git config --local user.name "GitHub Action"
+            git add dist/dosbox.html dist/dosbox.js dist/dosbox.wasm dist/packager.py
+            git commit -m "Update dist commit `git rev-parse --verify HEAD`"
         - name: Publish Artifacts to Dist/
-          uses: seanmiddleditch/gha-publish-to-git@v2
+          uses: ad-m/github-push-action@master
           with:
-            branch: main
-            github_token: '${{ secrets.GITHUB_TOKEN  }}'
-            github_pat: '${{ secrets.GH_PAT }}'
-            source_folder: dist
-          if: success() && github.event == 'push'
+            github_token: ${{ secrets.GITHUB_TOKEN }}
