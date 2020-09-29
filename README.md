@@ -60,7 +60,7 @@ First we have to build GNU compatible configure scripts, this requires Autotools
 
 We then need to run the configure script targetting web assembly
 
-```emconfigure ./configure --enable-wasm --disable-opengl```
+```emconfigure ./configure --enable-wasm --disable-opengl --host=none-none-none```
 
 We can then build the application
 
