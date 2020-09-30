@@ -987,6 +987,9 @@ void XGA_SetDualReg(Bit32u& reg, Bitu val) {
 			reg = (reg&0xffff0000)|(val&0x0000ffff);
 		xga.control1 ^= 0x10;
 		break;
+	default:
+		LOG_MSG("XGA: unsupported xga color mode %x", XGA_COLOR_MODE);
+		break;
 	}
 }
 
@@ -1001,6 +1004,9 @@ Bitu XGA_GetDualReg(Bit32u reg) {
 		xga.control1 ^= 0x10;
 		if (xga.control1 & 0x10) return reg&0x0000ffff;
 		else return reg>>16;
+	default:
+		LOG_MSG("XGA: unsupported xga color mode %x", XGA_COLOR_MODE);
+		break;
 	}
 	return 0;
 }

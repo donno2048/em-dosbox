@@ -610,6 +610,10 @@ void INT10_WriteChar(Bit8u chr,Bit8u attr,Bit8u page,Bit16u count,bool showattr)
 				page=0;
 				pospage=0;
 				break;
+			case MCH_TANDY:
+			case MCH_HERC:
+				LOG(LOG_INT10, LOG_ERROR)("writechar unhandled for MCH_TANDY and MCH_HERC %c", chr);
+				break;
 		}
 	}
 

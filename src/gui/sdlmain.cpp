@@ -2259,8 +2259,9 @@ static void HandleMouseButton(SDL_MouseButtonEvent * button) {
 }
 
 void GFX_LosingFocus(void) {
-	sdl.laltstate = SDL_KEYUP;
-	sdl.raltstate = SDL_KEYUP;
+	/// Issue 1 -> implicit conversion from 'SDL_EventType' to 'Bit8u' 
+	sdl.laltstate = (Bit8u)SDL_KEYUP;
+	sdl.raltstate = (Bit8u)SDL_KEYUP;
 	MAPPER_LosingFocus();
 }
 
@@ -2717,8 +2718,8 @@ static void show_warning(char const* const message) {
 }
 
 #else // !C_SDLGFX
-static void show_warning(char const* const message) {
-	LOG_MSG(message);
+static void show_warning(const char* message) {
+	LOG_MSG("%s", message);
 }
 #endif // !C_SDLGFX
 
@@ -2992,8 +2993,8 @@ int main(int argc, char* argv[]) {
 		if (SDL_InitSubSystem(SDL_INIT_JOYSTICK) < 0) LOG_MSG("Failed to init joystick support");
 #endif
 
-		sdl.laltstate = SDL_KEYUP;
-		sdl.raltstate = SDL_KEYUP;
+		sdl.laltstate = (Bit8u)SDL_KEYUP;
+		sdl.raltstate = (Bit8u)SDL_KEYUP;
 
 #if !SDL_VERSION_ATLEAST(2, 0, 0) // Not relevant for SDL 2.0 at the moment
 #if defined (WIN32)

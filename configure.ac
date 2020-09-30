@@ -20,8 +20,8 @@ dnl AC_CANONICAL_HOST fails to detect Emscripten.
 dnl This contains kludges to make things work.
 AS_IF([test "x$enable_emscripten" = "xyes"],
       [host_alias=none
-       : ${CXXFLAGS="-O3"}
-       : ${CFLAGS="-O3"}
+       : ${CXXFLAGS="-O3 -Wno-address-of-packed-member"}
+       : ${CFLAGS="-O3 -Wno-address-of-packed-member"}
        ac_cv_exeext=.html])
 
 dnl Detect the canonical host and target build environment

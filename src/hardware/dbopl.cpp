@@ -883,6 +883,10 @@ Channel* Channel::BlockTemplate( Chip* chip, Bit32u samples, Bit32s* output ) {
 			return (this + 2);
 		}
 		break;
+	//Eliminate compiler warnings
+	case sm2Percussion:
+	case sm3Percussion:
+		break;
 	}
 	//Init the operators with the the current vibrato and tremolo values
 	Op( 0 )->Prepare( chip );
@@ -947,6 +951,10 @@ Channel* Channel::BlockTemplate( Chip* chip, Bit32u samples, Bit32s* output ) {
 		case sm3AMAM:
 			output[ i * 2 + 0 ] += sample & maskLeft;
 			output[ i * 2 + 1 ] += sample & maskRight;
+			break;
+			//Eliminate compiler warnings
+		case sm2Percussion:
+		case sm3Percussion:
 			break;
 		}
 	}
