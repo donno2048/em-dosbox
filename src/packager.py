@@ -1,4 +1,4 @@
-#!/usr/bin/python2
+#!/usr/bin/python3
 from __future__ import print_function
 import sys, os, subprocess
 
@@ -96,17 +96,17 @@ def run_packager():
 
     if 'PYTHON' in globals():
         python_path = PYTHON
-    elif sys.version_info.major != 2:
-        python_path = 'python2' # Emscripten requires Python 2
+    elif sys.version_info.major != 3:
+        python_path = 'python3' # Emscripten requires Python 3
     else:
         python_path = sys.executable
 
     try:
         res = subprocess.check_output([python_path, packager_path,
                                        datafile,
-                                       "--no-heap-copy",
                                        "--preload",
                                        PACKAGE_ARG], universal_newlines=True)
+                                       #"--no-heap-copy",
     except:
         error('Error reported by Emscripten packager.')
 
