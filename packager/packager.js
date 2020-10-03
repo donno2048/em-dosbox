@@ -43,13 +43,13 @@ function findFilesToRead(path, node) {
 
         if (subFilesToRead[i].isDirectory()) {
 
-            directories.push({ parent: parent, name: subFilesToRead[i].name });
+            directories.push({ parent: parent.substr(usage.path.length), name: subFilesToRead[i].name });
             findFilesToRead(parent, subFilesToRead[i].name);
 
         } else {
 
             var buf = fs.readFileSync(parent + "/" + subFilesToRead[i].name);
-            files.push({ parent: parent, name: subFilesToRead[i].name, buffer: buf });
+            files.push({ parent: parent.substr(usage.path.length), name: subFilesToRead[i].name, buffer: buf });
             imgSize += buf.length;
 
         }
@@ -64,13 +64,13 @@ for (var i = 0; i < filesToRead.length; i++) {
 
     if (filesToRead[i].isDirectory()) {
         //Recursive
-        directories.push({ parent: usage.path, name: filesToRead[i].name })
+        directories.push({ parent: '/', name: filesToRead[i].name })
         findFilesToRead(usage.path, filesToRead[i].name);
 
     } else {
 
         var buf = fs.readFileSync(usage.path + "/" + filesToRead[i].name);
-        files.push({ parent: usage.path, name: filesToRead[i].name, buffer: buf });
+        files.push({ parent: '/', name: filesToRead[i].name, buffer: buf });
         imgSize += buf.length;
 
     }
@@ -113,17 +113,21 @@ var jsFiles = [];
 
 for (var i = 0; i < files.length; i++) {
     jsFiles.push({
-        filename: (files[i].parent.substr(usage.path.length)) + '/' + files[i].name,
+        filename: files[i].parent + '/' + files[i].name,
         start: files[i].start,
         end: files[i].end
     })
 }
 
-var code = require('./template')(usage, jsDirectories, files);
+var moduleTemplate = fs.readFileSync('./moduleTemplate.js');
+var fileTemplate = require('./fileTemplate')(usage, jsDirectories, jsFiles);
+var dosBoxSrc = fs.readFileSync('../dist/dosbox.js');
+var args = usage.run ? `Module.arguments = ["${usage.run}"]` : "";
 
+//Concatenate files, dosbox and module
 //Validate and tidy
 try {
-    var formatted = prettier.format(code);
+    var formatted = prettier.format(moduleTemplate + dosBoxSrc + fileTemplate + args);
 } catch (e) {
     console.error(e);
     return -1;
@@ -131,4 +135,7 @@ try {
 
 fs.writeFileSync(`${usage.output}.js`, formatted);
 fs.writeFileSync(`${usage.output}.data`, img);
+
+console.log(`${usage.output}.js and ${usage.output}.data successfully built.`);
+
 return 0;
