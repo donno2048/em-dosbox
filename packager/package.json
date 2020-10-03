@@ -9,6 +9,6 @@
   "dependencies": {
     "command-line-args": "^5.1.1",
     "pako": "^1.0.11",
-    "prettier-eslint": "^10.1.1"
+    "prettier-standard": "^16.4.1"
   }
 }
