@@ -122,7 +122,23 @@ for (var i = 0; i < files.length; i++) {
 var moduleTemplate = fs.readFileSync('./moduleTemplate.js');
 var fileTemplate = require('./fileTemplate')(usage, jsDirectories, jsFiles);
 var dosBoxSrc = fs.readFileSync('../dist/dosbox.js');
-var args = usage.run ? `Module.arguments = ["${usage.run}"]` : "";
+var args = `
+(function () {
+    //Add play icon to canvas
+    var canvas = document.getElementsByTagName("canvas")[0];
+    var img = new Image();
+    img.onload = function() {
+        canvas.getContext('2d').drawImage(img, 0, 0);
+    }
+    img.src = "data:image/svg+xml;charset=utf-8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxzdmcgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgNzQ0LjA5IDEwNTIuNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4NCiA8ZyB0cmFuc2Zvcm09Im1hdHJpeCguODYyMzMgMCAwIC44NjYxMyAtNDM4Ljg4IDEyNi4xMSkiPg0KICA8cmVjdCB4PSI1NDMuODEiIHk9IjIwNi45NSIgd2lkdGg9IjgwMC45MiIgaGVpZ2h0PSI1NzMuNDciIHJ4PSI0LjI2NDgiIHJ5PSIwIiBmaWxsPSIjMGEwOTA3IiBvcGFjaXR5PSIuMjE3MjEiIHN0cm9rZT0iIzI1MCIgc3Ryb2tlLWRhc2hhcnJheT0iNS41ODcyODQ4NSwgMi43OTM2NDI0MSwgMS4zOTY4MjEyLCAyLjc5MzY0MjQxIiBzdHJva2UtbGluZWNhcD0ic3F1YXJlIiBzdHJva2Utd2lkdGg9IjIuNzkzNiIvPg0KICA8cGF0aCB0cmFuc2Zvcm09Im1hdHJpeCgyLjI4OTkgMCAwIDIuMzcxIC0xNjcuNzUgLTEzMjkuNikiIGQ9Im01NDMuMTIgNzY1Ljg4YTYxLjQzMSA1OS4xMzQgMCAxIDEgLTEyMi44NiAwIDYxLjQzMSA1OS4xMzQgMCAxIDEgMTIyLjg2IDB6IiBmaWxsPSIjNjY2IiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iNy4zOTMiLz4NCiAgPHBhdGggZD0ibTg5My40OCA0MjkuMDh2MTE4LjE0bDExNS45My01OS4xNjItMTE1LjkzLTU4Ljk3OCIgZmlsbD0iI2ZmZiIvPg0KIDwvZz4NCjwvc3ZnPg==";
+    //Latch event listener so when user clicks play the module is run with specified args
+    var args = '${usage.run} -c MOUNT C /SRSE';
+    canvas.addEventListener("click", function (ev) {
+        console.log("Launching application");
+        Module.run(args.split(" "));
+    });
+})();
+`;
 
 //Concatenate files, dosbox and module
 //Validate and tidy

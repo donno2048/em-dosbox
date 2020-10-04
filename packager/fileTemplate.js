@@ -116,7 +116,7 @@ function processPackageData(arrayBuffer, metadata) {
     }
 
     Module.removeRunDependency(\`datafile_\${metadata.packageName}\`);
-    //Module.run(['C:\\SRSE.EXE', '-c', 'MOUNT', 'C:', '/SRSE']);
+    Module.run(['./SRSE/SRSE.EXE']);
 
 }
 

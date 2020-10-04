@@ -1,4 +1,5 @@
 window.Module = {
+    noInitialRun: true,
     preRun: [],
     postRun: [],
     print: (function () {
