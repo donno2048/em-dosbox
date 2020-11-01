@@ -29,7 +29,7 @@ jobs:
             emmake make
             cp src/dosbox.html src/dosbox.js src/dosbox.wasm src/packager.py dist/debug/
             emmake make clean
-          - name: Configure and Build RELEASE
+        - name: Configure and Build RELEASE
           run: |
             echo "Building RELEASE Version [No Debugging Information]"
             export EMMAKEN_CFLAGS="-O3"
