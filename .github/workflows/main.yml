@@ -12,9 +12,14 @@ jobs:
         - name: Install GNU Autotools
           run: sudo apt-get install autotools-dev autoconf automake
         - name: Install Emscripten [latest]
-          uses: mymindstorm/setup-emsdk@v6
+          uses: mymindstorm/setup-emsdk@v7
+          with:
+            version: 'latest'
         - name: Checkout Repository
           uses: actions/checkout@v2
+        - name: Detailing Versions
+          run: |
+            emcc -v
         - name: Using Configure Flags
           run: echo "./configure --enable-wasm --disable-opengl --host=none-none-none"
         - name: Running Autogen
