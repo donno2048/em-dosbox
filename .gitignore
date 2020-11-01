@@ -60,3 +60,4 @@ Makefile
 *~
 /include/version.h
 demo/*
+a.wasm
