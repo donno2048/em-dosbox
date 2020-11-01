@@ -23,7 +23,7 @@
 #include "inout.h"
 #include "mem.h"
 
-struct SVGA_PVGA1A_DATA {
+typedef struct {
 	Bitu PR0A;
 	Bitu PR0B;
 	Bitu PR1;
@@ -36,9 +36,9 @@ struct SVGA_PVGA1A_DATA {
 
 	Bitu clockFreq[4];
 	Bitu biosMode;
-};
+} SVGA_PVGA1A_DATA;
 
-static struct SVGA_PVGA1A_DATA pvga1a = { 0,0, 0,0,0,0,0, {0,0,0,0}, 0 };
+static SVGA_PVGA1A_DATA pvga1a = { 0,0, 0,0,0,0,0, {0,0,0,0}, 0 };
 
 
 static void bank_setup_pvga1a() {

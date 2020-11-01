@@ -69,9 +69,9 @@
 #define WC scalerWriteCache.b32
 //#define FC scalerFrameCache.b32
 #define FC (*(scalerFrameCache_t*)(&scalerSourceCache.b32[400][0])).b32
-//#define redMask		0xff0000
+#define redMask		0xff0000
 #define greenMask	0x00ff00
-//#define blueMask	0x0000ff
+#define blueMask	0x0000ff
 #define redBits		8
 #define greenBits	8
 #define blueBits	8
@@ -86,6 +86,7 @@
 #define redMask		0xff0000
 #define blueMask	0x0000ff
 #define redShift	16
+#define greenShift	8
 #define blueShift	0
 #endif
 #endif
