@@ -17,18 +17,31 @@ jobs:
           uses: actions/checkout@v2
         - name: Using Configure Flags
           run: echo "./configure --enable-wasm --disable-opengl --host=none-none-none"
-        - name: Configure and Build
+        - name: Running Autogen
           run: |
             chmod +x autogen.sh
             ./autogen.sh
+        - name: Configure and Build DEBUG
+          run: |
+            echo "Building DEBUG Version [Extra Debugging Information]"
+            export EMMAKEN_CFLAGS="-O0 -g"
             emconfigure ./configure --enable-wasm --disable-opengl --host=none-none-none
             emmake make
-            cp src/dosbox.html src/dosbox.js src/dosbox.wasm src/packager.py dist/
+            cp src/dosbox.html src/dosbox.js src/dosbox.wasm src/packager.py dist/debug/
+            emmake make clean
+          - name: Configure and Build RELEASE
+          run: |
+            echo "Building RELEASE Version [No Debugging Information]"
+            export EMMAKEN_CFLAGS="-O3"
+            emconfigure ./configure --enable-wasm --disable-opengl --host=none-none-none
+            emmake make
+            cp src/dosbox.html src/dosbox.js src/dosbox.wasm src/packager.py dist/release/
         - name: Commit re-Distributables
           run: |
             git config --local user.email "action@github.com"
             git config --local user.name "GitHub Action"
-            git add dist/dosbox.html dist/dosbox.js dist/dosbox.wasm dist/packager.py
+            git add dist/debug/dosbox.html dist/debug/dosbox.js dist/debug/dosbox.wasm dist/debug/packager.py
+            git add dist/release/dosbox.html dist/release/dosbox.js dist/release/dosbox.wasm dist/release/packager.py
             git commit -m "Update dist commit `git rev-parse --verify HEAD`"
         - name: Publish Artifacts to Dist/
           uses: ad-m/github-push-action@master
