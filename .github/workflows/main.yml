@@ -21,14 +21,6 @@ jobs:
           run: |
             chmod +x autogen.sh
             ./autogen.sh
-        - name: Configure and Build DEBUG
-          run: |
-            echo "Building DEBUG Version [Extra Debugging Information]"
-            export EMMAKEN_CFLAGS="-O0 -g"
-            emconfigure ./configure --enable-wasm --disable-opengl --host=none-none-none
-            emmake make
-            cp src/dosbox.html src/dosbox.js src/dosbox.wasm src/packager.py dist/debug/
-            emmake make clean
         - name: Configure and Build RELEASE
           run: |
             echo "Building RELEASE Version [No Debugging Information]"
@@ -36,6 +28,14 @@ jobs:
             emconfigure ./configure --enable-wasm --disable-opengl --host=none-none-none
             emmake make
             cp src/dosbox.html src/dosbox.js src/dosbox.wasm src/packager.py dist/release/
+            emmake make clean
+        - name: Configure and Build DEBUG
+          run: |
+            echo "Building DEBUG Version [Extra Debugging Information]"
+            export EMMAKEN_CFLAGS="-O0 -g -s TOTAL_MEMORY=268435456"
+            emconfigure ./configure --enable-wasm --disable-opengl --host=none-none-none
+            emmake make
+            cp src/dosbox.html src/dosbox.js src/dosbox.wasm src/packager.py dist/debug/
         - name: Commit re-Distributables
           run: |
             git config --local user.email "action@github.com"
