@@ -37,7 +37,7 @@ jobs:
         - name: Configure and Build DEBUG
           run: |
             echo "Building DEBUG Version [Extra Debugging Information]"
-            export EMMAKEN_CFLAGS="-g"
+            export EMMAKEN_CFLAGS="-g --profiling --profiling-funcs"
             sed -i 's/TOTAL_MEMORY=134217728/TOTAL_MEMORY=268435456/g' src/Makefile
             emconfigure ./configure --enable-wasm --disable-opengl --host=none-none-none
             emmake make
