@@ -37,7 +37,8 @@ jobs:
         - name: Configure and Build DEBUG
           run: |
             echo "Building DEBUG Version [Extra Debugging Information]"
-            export EMMAKEN_CFLAGS="-O0 -g -s TOTAL_MEMORY=268435456"
+            export EMMAKEN_CFLAGS="-g"
+            sed -i /TOTAL_MEMORY=134217728/TOTAL_MEMORY=268435456/g src/Makefile
             emconfigure ./configure --enable-wasm --disable-opengl --host=none-none-none
             emmake make
             cp src/dosbox.html src/dosbox.js src/dosbox.wasm src/packager.py dist/debug/
