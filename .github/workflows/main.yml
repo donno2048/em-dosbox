@@ -9,8 +9,6 @@ jobs:
     name: build 
     runs-on: ubuntu-latest
     steps:
-        - name: Install GNU Autotools
-          run: sudo apt-get install autotools-dev autoconf automake
         - name: Install Emscripten [latest]
           uses: mymindstorm/setup-emsdk@v7
           with:
