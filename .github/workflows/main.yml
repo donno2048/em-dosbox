@@ -32,11 +32,9 @@ jobs:
             emmake make
             cp src/dosbox.html src/dosbox.js src/dosbox.wasm src/packager.py dist/standard/release/
             export EMMAKEN_CFLAGS="-O3 -s MODULARIZE -s EXPORT_ES6=1 -s EXTRA_EXPORTED_RUNTIME_METHODS=['FS']"
-            emconfigure ./configure --enable-wasm --disable-opengl --host=none-none-none
             emmake make
             cp src/dosbox.js src/dosbox.wasm dist/es6/release/
             emmake make clean
-            
         - name: Configure and Build DEBUG
           run: |
             echo "Building DEBUG Version [Extra Debugging Information]"
@@ -46,7 +44,6 @@ jobs:
             emmake make
             cp src/dosbox.html src/dosbox.js src/dosbox.wasm src/packager.py dist/standard/debug/
             export EMMAKEN_CFLAGS="-g --profiling --profiling-funcs -s MODULARIZE -s EXPORT_ES6=1 -s EXTRA_EXPORTED_RUNTIME_METHODS=['FS']"
-            emconfigure ./configure --enable-wasm --disable-opengl --host=none-none-none
             emmake make
             cp src/dosbox.js src/dosbox.wasm dist/es6/debug/
         - name: Commit re-Distributables
