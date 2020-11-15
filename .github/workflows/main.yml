@@ -32,8 +32,13 @@ jobs:
             export EMMAKEN_CFLAGS="-O3"
             emconfigure ./configure --enable-wasm --disable-opengl --host=none-none-none
             emmake make
-            cp src/dosbox.html src/dosbox.js src/dosbox.wasm src/packager.py dist/release/
+            cp src/dosbox.html src/dosbox.js src/dosbox.wasm src/packager.py dist/standard/release/
+            export EMMAKEN_CFLAGS="-O3 -s MODULARIZE -s EXPORT_ES6=1 -s EXTRA_EXPORTED_RUNTIME_METHODS=['FS']"
+            emconfigure ./configure --enable-wasm --disable-opengl --host=none-none-none
+            emmake make
+            cp src/dosbox.js src/dosbox.wasm dist/es6/release/
             emmake make clean
+            
         - name: Configure and Build DEBUG
           run: |
             echo "Building DEBUG Version [Extra Debugging Information]"
@@ -41,13 +46,19 @@ jobs:
             sed -i 's/TOTAL_MEMORY=134217728/TOTAL_MEMORY=268435456/g' src/Makefile
             emconfigure ./configure --enable-wasm --disable-opengl --host=none-none-none
             emmake make
-            cp src/dosbox.html src/dosbox.js src/dosbox.wasm src/packager.py dist/debug/
+            cp src/dosbox.html src/dosbox.js src/dosbox.wasm src/packager.py dist/standard/debug/
+            export EMMAKEN_CFLAGS="-g --profiling --profiling-funcs -s MODULARIZE -s EXPORT_ES6=1 -s EXTRA_EXPORTED_RUNTIME_METHODS=['FS']"
+            emconfigure ./configure --enable-wasm --disable-opengl --host=none-none-none
+            emmake make
+            cp src/dosbox.js src/dosbox.wasm dist/es6/debug/
         - name: Commit re-Distributables
           run: |
             git config --local user.email "action@github.com"
             git config --local user.name "GitHub Action"
-            git add dist/debug/dosbox.html dist/debug/dosbox.js dist/debug/dosbox.wasm dist/debug/packager.py
-            git add dist/release/dosbox.html dist/release/dosbox.js dist/release/dosbox.wasm dist/release/packager.py
+            git add dist/standard/debug/dosbox.html dist/standard/debug/dosbox.js dist/standard/debug/dosbox.wasm dist/standard/debug/packager.py
+            git add dist/standard/release/dosbox.html dist/standard/release/dosbox.js dist/standard/release/dosbox.wasm dist/standard/release/packager.py
+            git add dist/es6/debug/dosbox.js dist/es6/debug/dosbox.wasm 
+            git add dist/es6/release/dosbox.js dist/es6/release/dosbox.wasm 
             git commit -m "Update dist commit `git rev-parse --verify HEAD`"
         - name: Publish Artifacts to Dist/
           uses: ad-m/github-push-action@master
