@@ -16,13 +16,28 @@ AC_ARG_ENABLE(
   [AC_HELP_STRING([--enable-emscripten=@<:@no/yes@:>@],
                   [compile to JavaScript using Emscripten])])
 
+AC_ARG_ENABLE(
+  [es6],
+  [AC_HELP_STRING([--enable-es6],
+    [Build to ES6 Module])],
+  [], [enable_es6=no])
+  AM_CONDITIONAL([ESMODULE], [test "x$enable_es6" == "xyes"])
+
+
 dnl AC_CANONICAL_HOST fails to detect Emscripten.
 dnl This contains kludges to make things work.
 AS_IF([test "x$enable_emscripten" = "xyes"],
-      [host_alias=none
+  AS_IF([test "x$enable_es6" = "xyes"],
+       [host_alias=none
+       : ${CXXFLAGS="-O3 -Wno-address-of-packed-member"}
+       : ${CFLAGS="-O3 -Wno-address-of-packed-member"}
+       ac_cv_exeext=.js],
+       [host_alias=none
        : ${CXXFLAGS="-O3 -Wno-address-of-packed-member"}
        : ${CFLAGS="-O3 -Wno-address-of-packed-member"}
        ac_cv_exeext=.html])
+  )
+
 
 dnl Detect the canonical host and target build environment
 AC_CANONICAL_HOST

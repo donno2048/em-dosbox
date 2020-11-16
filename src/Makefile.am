@@ -2,7 +2,7 @@ AM_CPPFLAGS = -I$(top_srcdir)/include
 
 SUBDIRS = cpu debug dos fpu gui hardware libs ints misc shell platform 
 
-bin_PROGRAMS = dosbox
+bin_PROGRAMS = dosbox$(EXEEXT)
 
 if HAVE_WINDRES
 ico_stuff = winres.rc
@@ -30,7 +30,11 @@ CLEANFILES=dosbox.js dosbox.html.mem dosbox.js.orig.js dosbox.js.tmp.js
 #dosbox_LDFLAGS+=--memory-init-file 0
 #endif
 if WEBASSEMBLY
+if ESMODULE
+dosbox_LDFLAGS+=-s WASM=1 -s FORCE_FILESYSTEM=1 -s FETCH=1 -s ASYNCIFY -s DISABLE_DEPRECATED_FIND_EVENT_TARGET_BEHAVIOR=0 -s MODULARIZE -s EXPORT_NAME=DOSBox -s EXPORT_ES6=1 -s EXTRA_EXPORTED_RUNTIME_METHODS=['FS']
+else
 dosbox_LDFLAGS+=-s WASM=1 -s FORCE_FILESYSTEM=1 -s FETCH=1 -s ASYNCIFY -s DISABLE_DEPRECATED_FIND_EVENT_TARGET_BEHAVIOR=0 --shell-file ../shells/shell_minimal_mod.html
+endif
 endif
 endif
 

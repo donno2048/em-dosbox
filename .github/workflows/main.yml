@@ -24,27 +24,38 @@ jobs:
           run: |
             chmod +x autogen.sh
             ./autogen.sh
-        - name: Configure and Build RELEASE
+        - name: Configure and Build RELEASE Standard JS With HTML
           run: |
-            echo "Building RELEASE Version [No Debugging Information]"
+            echo "Building RELEASE Version [No Debugging Information] STANDARD"
             export EMMAKEN_CFLAGS="-O3"
             emconfigure ./configure --enable-wasm --disable-opengl --host=none-none-none
-            emmake make
+            emmake make -j$(nproc)
             cp src/dosbox.html src/dosbox.js src/dosbox.wasm src/packager.py dist/standard/release/
-            export EMMAKEN_CFLAGS="-O3 -s MODULARIZE -s EXPORT_ES6=1 -s EXTRA_EXPORTED_RUNTIME_METHODS=['FS']"
-            emmake make
+            emmake make clean
+        - name: Configure and Build RELEASE ES6 JS Module
+          run: |
+            echo "Building RELEASE Version [No Debugging Information] ES6"
+            export EMMAKEN_CFLAGS="-O3"
+            emconfigure ./configure --enable-wasm --disable-opengl --host=none-none-none --enable-es6
+            emmake make -j$(nproc)
             cp src/dosbox.js src/dosbox.wasm dist/es6/release/
             emmake make clean
-        - name: Configure and Build DEBUG
+        - name: Configure and Build DEBUG Standard JS With HTML
           run: |
             echo "Building DEBUG Version [Extra Debugging Information]"
             export EMMAKEN_CFLAGS="-g --profiling --profiling-funcs"
-            sed -i 's/TOTAL_MEMORY=134217728/TOTAL_MEMORY=268435456/g' src/Makefile
             emconfigure ./configure --enable-wasm --disable-opengl --host=none-none-none
-            emmake make
+            sed -i 's/TOTAL_MEMORY=134217728/TOTAL_MEMORY=268435456/g' src/Makefile
+            emmake make -j$(nproc)
             cp src/dosbox.html src/dosbox.js src/dosbox.wasm src/packager.py dist/standard/debug/
-            export EMMAKEN_CFLAGS="-g --profiling --profiling-funcs -s MODULARIZE -s EXPORT_ES6=1 -s EXTRA_EXPORTED_RUNTIME_METHODS=['FS']"
-            emmake make
+            emmake make clean
+        - name: Configure and Build DEBUG ES6 JS Module
+          run: |
+            echo "Building DEBUG Version [Extra Debugging Information]"
+            export EMMAKEN_CFLAGS="-g --profiling --profiling-funcs"
+            emconfigure ./configure --enable-wasm --disable-opengl --host=none-none-none --enable-es6
+            sed -i 's/TOTAL_MEMORY=134217728/TOTAL_MEMORY=268435456/g' src/Makefile
+            emmake make -j$(nproc)
             cp src/dosbox.js src/dosbox.wasm dist/es6/debug/
         - name: Commit re-Distributables
           run: |
