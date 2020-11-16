@@ -234,7 +234,7 @@ void DOS_Shell::InputCommand(char * line) {
 			outc('\n');
 			size=0;			//Kill the while loop
 			break;
-		case'\t':
+		case '\t':
 			{
 				if (l_completion.size()) {
 					it_completion ++;
