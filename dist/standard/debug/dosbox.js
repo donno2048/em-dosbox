@@ -1102,7 +1102,7 @@ var STACK_BASE = 34439120,
 
 var TOTAL_STACK = 5242880;
 
-var INITIAL_INITIAL_MEMORY = Module['INITIAL_MEMORY'] || 134217728;
+var INITIAL_INITIAL_MEMORY = Module['INITIAL_MEMORY'] || 268435456;
 
 // In non-standalone/normal mode, we create the memory here.
 // include: runtime_init_memory.js
