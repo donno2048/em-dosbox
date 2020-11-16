@@ -1662,7 +1662,7 @@ static void KEYB_ProgramStart(Program * * make) {
 class SIGNAL : public Program {
 	public:
 		void Run(void);
-}
+};
 
 void SIGNAL::Run(void) {
 	if(control->SecureMode()) {
@@ -1683,8 +1683,8 @@ void SIGNAL::Run(void) {
 		return Module.signal($0);
 	}, commandLine.c_str());
 
-	std::string returned(result);
-	WriteOut(returned);
+	std::string returned(reinterpret_cast<char *>(result));
+	WriteOut(returned.c_str());
 }
 
 static void SIGNAL_ProgramStart(Program * * make) {
