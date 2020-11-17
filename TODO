@@ -1,0 +1,12 @@
+Function signature mismatch
+    at INT2F_Handler() (http://localhost:8182/static/dosbox/runtime/dist/es6/debug/dosbox.wasm:wasm-function[708]:0xe21ad)
+    at Normal_Loop() (http://localhost:8182/static/dosbox/runtime/dist/es6/debug/dosbox.wasm:wasm-function[263]:0x529a)
+    at DOSBOX_RunMachine() (http://localhost:8182/static/dosbox/runtime/dist/es6/debug/dosbox.wasm:wasm-function[266]:0x57d7)
+    at CALLBACK_RunRealInt(unsigned char) (http://localhost:8182/static/dosbox/runtime/dist/es6/debug/dosbox.wasm:wasm-function[274]:0xc2f7)
+    at DOS_Shell::Execute(char*, char*) (http://localhost:8182/static/dosbox/runtime/dist/es6/debug/dosbox.wasm:wasm-function[2763]:0x295dc5)
+    at DOS_Shell::DoCommand(char*) (http://localhost:8182/static/dosbox/runtime/dist/es6/debug/dosbox.wasm:wasm-function[2723]:0x285305)
+    at DOS_Shell::ParseLine(char*) (http://localhost:8182/static/dosbox/runtime/dist/es6/debug/dosbox.wasm:wasm-function[2702]:0x27effd)
+    at DOS_Shell::Run() (http://localhost:8182/static/dosbox/runtime/dist/es6/debug/dosbox.wasm:wasm-function[2704]:0x27fee7)
+    at SHELL_Init() (http://localhost:8182/static/dosbox/runtime/dist/es6/debug/dosbox.wasm:wasm-function[2708]:0x282e86)
+    at Config::StartUp() (http://localhost:8182/static/dosbox/runtime/dist/es6/debug/dosbox.wasm:wasm-function[2651]:0x27ad0d)
+INT2F_Handler()

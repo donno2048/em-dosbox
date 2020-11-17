@@ -647,7 +647,7 @@ void DOSBOX_Init(void) {
 		"Cycles can be set in 3 ways:\n"
 		"  'auto'          tries to guess what a game needs.\n"
 		"                  It usually works, but can fail for certain games.\n"
-		"  'fixed #number' will set a fixed amount of cycles. This is what you usually\n"
+		"  'fixed #number' will set a fixed amount oferrupted, and the scrip cycles. This is what you usually\n"
 		"                  need if 'auto' fails (Example: fixed 4000).\n"
 		"  'max'           will allocate as much cycles as your computer is able to\n"
 		"                  handle.");
