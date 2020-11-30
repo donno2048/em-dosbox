@@ -1683,8 +1683,10 @@ void SIGNAL::Run(void) {
 		return Module.signal($0);
 	}, commandLine.c_str());
 
-	std::string returned(reinterpret_cast<char *>(result));
-	WriteOut(returned.c_str());
+	if (result != 0) {
+		std::string returned(reinterpret_cast<char *>(result));
+		WriteOut(returned.c_str());
+	}
 }
 
 static void SIGNAL_ProgramStart(Program * * make) {
