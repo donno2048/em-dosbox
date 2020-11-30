@@ -10102,6 +10102,7 @@ var _asyncify_stop_rewind = Module["_asyncify_stop_rewind"] = function() {
 
 // === Auto-generated postamble setup entry stuff ===
 
+Module["UTF8ToString"] = UTF8ToString;
 Module["stringToUTF8"] = stringToUTF8;
 Module["addRunDependency"] = addRunDependency;
 Module["removeRunDependency"] = removeRunDependency;
@@ -10111,6 +10112,7 @@ Module["FS_createPreloadedFile"] = FS.createPreloadedFile;
 Module["FS_createLazyFile"] = FS.createLazyFile;
 Module["FS_createDevice"] = FS.createDevice;
 Module["FS_unlink"] = FS.unlink;
+Module["FS"] = FS;
 
 var calledRun;
 
