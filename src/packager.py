@@ -73,7 +73,7 @@ def find_emscripten():
 
 # Find Emscripten's file packager in ./upstream/emscripten/tools/file_packager.py
 def find_packager():
-    p = os.path.join(find_emscripten(), "upstream", "emscripten", "tools", "file_packager.py");
+    p = os.path.join(find_emscripten(), "tools", "file_packager.py");
     if not os.path.isfile(p):
         error('Emscripten file_packager.py not found.')
     return p;
