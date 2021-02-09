@@ -6,11 +6,13 @@ cd emsdk
 ./emsdk activate latest
 source ./emsdk_env.sh
 cp .emscripten ~
-export PATH=$PWD:$PATH
+export PATH="/usr/bin:$PATH"
 cd ..
+sudo apt install libc6-dev g++ gcc
 sudo autoreconf -f -i
 ./autogen.sh
-emconfigure ./configure --enable-wasm --disable-opengl --host=none-none-none
+emconfigure ./configure --enable-wasm --disable-opengl --host=none-none-none AR=/usr/bin/ar CC=gcc
 make
 cd src
 python packager.py win95 win AUTOEXEC.BAT
+sed -i -e 's/(simulateInfiniteLoop)/(false)/g' dosbox.js
