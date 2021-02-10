@@ -8,10 +8,10 @@ source ./emsdk_env.sh
 cp .emscripten ~
 export PATH="/usr/bin:$PATH"
 cd ..
-sudo apt install libc6-dev g++ gcc -y
 sudo autoreconf -f -i
 ./autogen.sh
-{emconfigure ./configure --enable-wasm --disable-opengl --host=none-none-none AR=/usr/bin/ar && emmake make} && {
+emconfigure ./configure --enable-wasm --disable-opengl --host=none-none-none AR=/usr/bin/ar && emmake make && {
 cd src
 python packager.py win95 win AUTOEXEC.BAT
-sed -i -e 's/(simulateInfiniteLoop)/(false)/g' dosbox.js}
+sed -i -e 's/(simulateInfiniteLoop)/(false)/g' dosbox.js
+}
